@@ -7,7 +7,7 @@ import java.lang.StringBuilder
  * @author Douglas Siviotti
  * @since 1.0
  */
-class MaskTable(text: String, rowCount: Int = DEFAULT_ROW_COUNT) {
+class MaskTable(text: String, val rowCount: Int = DEFAULT_ROW_COUNT) {
     private val rows: List<List<Char>>
     private val map: Map<Char, Int>
 
