@@ -3,41 +3,52 @@ package br.net.maskit
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import kotlin.random.Random
+
 import kotlin.random.nextLong
 
 private const val TEST_TABLE = "BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy1234567890"
 
 internal class NumericMaskitTest {
 
-    fun createMaskit() = NumericMaskit(Swapper(listOf(2, 10, 3, 8, 6, 9, 0, 7, 1, 5, 4)), MaskTable(TEST_TABLE))
+    fun createMaskit() = NumericMaskit(
+        Swapper(listOf(2, 10, 3, 8, 6, 9, 0, 7, 1, 5, 4)), MaskTable(
+            DEFAULT_MASK_TABLE_STR
+        )
+    )
 
     @Test
-    fun testMask(){
+    fun testMask() {
         val cpf = numericIdOf("07311631769")
-        val maskit = createMaskit()
+        val seq = listOf(2, 10, 3, 8, 6, 9, 0, 7, 1, 5, 4)
+        val testTable = "BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy1234567890"
+        val maskit = NumericMaskit(Swapper(seq), MaskTable(testTable))
         val maskedId = maskit.mask(cpf)
         assertEquals(maskedIdOf("iKMwYvpgmHW"), maskedId)
     }
 
     @Test
-    fun testUnmask(){
-        val maskit = createMaskit()
-        val maskedId =maskedIdOf("iKMwYvpgmHW")
+    fun testUnmask() {
+        val seq = listOf(2, 10, 3, 8, 6, 9, 0, 7, 1, 5, 4)
+        val testTable = "BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy1234567890"
+        val maskit = NumericMaskit(Swapper(seq), MaskTable(testTable))
+        val maskedId = maskedIdOf("iKMwYvpgmHW")
         val unmaskedId = maskit.unmask(maskedId)
         assertEquals(numericIdOf("07311631769"), unmaskedId)
     }
 
     @Test
-    fun testMaskAndUnmask(){
+    fun testMaskAndUnmask() {
         val cpf = numericIdOf("07311631769")
-        val maskit = createMaskit()
+        val seq = listOf(2, 10, 3, 8, 6, 9, 0, 7, 1, 5, 4)
+        val testTable = "BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy1234567890"
+        val maskit = NumericMaskit(Swapper(seq), MaskTable(testTable))
         val maskedId = maskit.mask(cpf)
         val unmaskedId = maskit.unmask(maskedId)
         assertEquals(cpf, unmaskedId)
     }
 
     @Test
-    fun testRandomMask(){
+    fun testRandomMask() {
         val cpf = numericIdOf("07311631769")
         val maskit = createMaskit()
         val maskedId = maskit.randomMask(cpf)
@@ -46,21 +57,21 @@ internal class NumericMaskitTest {
     }
 
     @Test
-    fun testRandomDuplicate(){
+    fun testRandomDuplicate() {
         val cpf = numericIdOf("07311631769")
         val maskit = createMaskit()
         var masked: Masked
         val map = mutableMapOf<Masked, Int>()
-        var tmp: Int=0
+        var tmp: Int = 0
         val max = 1000000
-        for (i in 1 .. max){
+        for (i in 1..max) {
             masked = maskit.randomMask(cpf)
             assertEquals(cpf, maskit.unmask(masked))
-            tmp=0
-            if (map.containsKey(masked)){
+            tmp = 0
+            if (map.containsKey(masked)) {
                 tmp = map[masked]!!
             }
-            map[masked]= tmp+1
+            map[masked] = tmp + 1
         }
         val dupMap = map.filter { it.value > 1 }.toMap()
         dupMap.forEach { k, v -> println("randomMasked:$k occurs:$v") }
@@ -73,7 +84,7 @@ internal class NumericMaskitTest {
         val cpf = numericIdOf("07311631769")
         val seq = Swapper(listOf(2, 10, 3, 8, 6, 9, 0, 7, 1, 5, 4))
         val table = MaskTable(TEST_TABLE)
-        println ("0123456789")
+        println("0123456789")
         println(table)
         val kit = NumericMaskit(seq, table)
         val pseudoCpf = kit.mask(cpf)
@@ -103,10 +114,10 @@ internal class NumericMaskitTest {
         visual(numericIdOf("12345678906"), kit)
     }
 
-    fun visual(id: NumericId, kit: NumericMaskit){
+    fun visual(id: NumericId, kit: NumericMaskit) {
         val pseudo = kit.mask(id)
         val seed = kit.swapper.blend(id)
-        println (" id=$id pseudo=$pseudo seed=$seed shift=${seed% DEFAULT_ROW_COUNT}")
+        println(" id=$id pseudo=$pseudo seed=$seed shift=${seed % DEFAULT_ROW_COUNT}")
     }
 
     @Test
@@ -124,15 +135,15 @@ internal class NumericMaskitTest {
         val mapDist = mutableMapOf<Char, Int>()
         val mapOccur = mutableMapOf<Int, MutableMap<Char, Int>>()
         val mapUnique = mutableMapOf<Long, String>()
-        for (i in 1L .. max) {
-            num = random.nextLong(10000000001L .. 99999999999L)
+        for (i in 1L..max) {
+            num = random.nextLong(10000000001L..99999999999L)
             id = numericIdOf(num)
             masked = kit.mask(id)
-            if (mapUnique.containsKey(num)){
+            if (mapUnique.containsKey(num)) {
                 //println("Duplicate num = $num. Old PseudiId = ${mapUnique[num]} new PseudoId = $maskedId")
                 assertEquals(mapUnique[num], masked.text)
             }
-            mapUnique[num]= masked.text
+            mapUnique[num] = masked.text
             decodedId = kit.unmask(masked)
             dist(masked, mapDist)
             //println(" id=$id encoded=$pseudoId seed=${kit.seq.seed(id)}")

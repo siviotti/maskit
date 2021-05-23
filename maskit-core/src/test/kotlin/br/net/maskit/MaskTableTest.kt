@@ -7,7 +7,7 @@ internal class MaskTableTest{
 
     @Test
     fun testCreate(){
-        val pseudoTable = MaskTable("BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy1234567890")
+        val pseudoTable = MaskTable(DEFAULT_MASK_TABLE_STR)
         println(pseudoTable)
     }
 }

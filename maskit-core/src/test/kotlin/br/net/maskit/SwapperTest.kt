@@ -69,11 +69,10 @@ internal class SwapperTest {
         assertThrows(IllegalArgumentException::class.java) { seq.restore(big) }
         assertThrows(IllegalArgumentException::class.java) { seq.blend(little) }
         assertThrows(IllegalArgumentException::class.java) { seq.blend(big) }
-
     }
 
     @Test
-    fun testSeed(){
+    fun testBlend(){
         val seq = Swapper(listOf(2,0,1,4,3))
         val id = numericIdOf("12345")
         // numericId.digits.forEachIndexed { index, digit -> count += (digits[index] + 1) * digit }
