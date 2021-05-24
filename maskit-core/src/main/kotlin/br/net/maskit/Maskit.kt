@@ -47,4 +47,10 @@ interface Maskit<T> {
      * @see unmask
      */
     fun randomMask(id: T): Masked
+
+    //fun timeMask(id: T): Masked
+
+    //fun dateMask(id: T): Masked
+
+    //fun timeMask(id: T): Masked
 }

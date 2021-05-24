@@ -4,7 +4,7 @@ import br.net.maskit.Masked;
 import br.net.maskit.Maskit;
 import br.net.maskit.NumericId;
 
-import static br.net.maskit.ApiKt.*;
+import static br.net.maskit.Api.*;
 
 public class MaskitJava {
 

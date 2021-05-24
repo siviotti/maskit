@@ -23,7 +23,7 @@ internal class NumericMaskitTest {
         val testTable = "BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy1234567890"
         val maskit = NumericMaskit(Swapper(seq), MaskTable(testTable))
         val maskedId = maskit.mask(cpf)
-        assertEquals(maskedIdOf("iKMwYvpgmHW"), maskedId)
+        assertEquals(maskedOf("iKMwYvpgmHW"), maskedId)
     }
 
     @Test
@@ -31,7 +31,7 @@ internal class NumericMaskitTest {
         val seq = listOf(2, 10, 3, 8, 6, 9, 0, 7, 1, 5, 4)
         val testTable = "BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy1234567890"
         val maskit = NumericMaskit(Swapper(seq), MaskTable(testTable))
-        val maskedId = maskedIdOf("iKMwYvpgmHW")
+        val maskedId = maskedOf("iKMwYvpgmHW")
         val unmaskedId = maskit.unmask(maskedId)
         assertEquals(numericIdOf("07311631769"), unmaskedId)
     }
@@ -74,9 +74,9 @@ internal class NumericMaskitTest {
             map[masked] = tmp + 1
         }
         val dupMap = map.filter { it.value > 1 }.toMap()
-        dupMap.forEach { k, v -> println("randomMasked:$k occurs:$v") }
-        println("Generated randomMasks: ${map.keys.size} / $max")
-        println("Duplicates: ${max - map.keys.size}")
+        //dupMap.forEach { k, v -> println("randomMasked:$k occurs:$v") }
+        //println("Generated randomMasks: ${map.keys.size} / $max")
+        //println("Duplicates: ${max - map.keys.size}")
     }
 
     @Test
@@ -84,8 +84,6 @@ internal class NumericMaskitTest {
         val cpf = numericIdOf("07311631769")
         val seq = Swapper(listOf(2, 10, 3, 8, 6, 9, 0, 7, 1, 5, 4))
         val table = MaskTable(TEST_TABLE)
-        println("0123456789")
-        println(table)
         val kit = NumericMaskit(seq, table)
         val pseudoCpf = kit.mask(cpf)
         visual(numericIdOf("11111111111"), kit)
@@ -117,7 +115,7 @@ internal class NumericMaskitTest {
     fun visual(id: NumericId, kit: NumericMaskit) {
         val pseudo = kit.mask(id)
         val seed = kit.swapper.blend(id)
-        println(" id=$id pseudo=$pseudo seed=$seed shift=${seed % DEFAULT_ROW_COUNT}")
+        //println(" id=$id pseudo=$pseudo seed=$seed shift=${seed % DEFAULT_ROW_COUNT}")
     }
 
     @Test
@@ -125,7 +123,6 @@ internal class NumericMaskitTest {
         val seq = Swapper(listOf(2, 10, 3, 8, 6, 9, 0, 7, 1, 5, 4))
         val table = MaskTable(TEST_TABLE)
         val kit = NumericMaskit(seq, table)
-        println(table)
         val max: Long = 1000000
         var num = 0L
         val random = Random

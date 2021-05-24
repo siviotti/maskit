@@ -1,15 +1,15 @@
+@file:JvmName("Api")
 package br.net.maskit
 
+fun numericMaskitOf(swapper: Swapper, maskTable: MaskTable) = NumericMaskit(swapper, maskTable)
+fun numericMaskitOf(commaSeparatedIndexes: String, charTable: String) =
+    numericMaskitOf(
+        Swapper(commaSeparatedIndexes.split(",").map { it.toInt() }),
+        MaskTable(charTable, DEFAULT_ROW_COUNT)
+    )
 fun numericIdOf(value: Long) = NumericId(toDigits(value.toString()))
 fun numericIdOf(text: String) = NumericId(toDigits(text))
-fun maskedIdOf(text: String) = Masked(text)
-fun toDigits(text: String) = text.map { c -> Character.getNumericValue(c) }
-fun numericMaskitOf(swapper: Swapper, maskTable: MaskTable) = NumericMaskit(swapper, maskTable)
-fun numericMaskitOf(commaSeparatedChars: String, chars: String) =
-    numericMaskitOf(
-        Swapper(commaSeparatedChars.split(",").map { it.toInt() }),
-        MaskTable(chars, DEFAULT_ROW_COUNT)
-    )
+fun maskedOf(text: String) = Masked(text)
 
 /**
  * WARNING: USE FOR TEST ONLY!

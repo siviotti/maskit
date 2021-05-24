@@ -8,6 +8,20 @@
     <artifactId>maskit-core</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <licenses>
+        <license>
+            <name>The GNU Lesser General Public License, Version 3.0</name>
+            <url>https://www.gnu.org/licenses/lgpl.txtt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Douglas Siviotti</name>
+            <email>douglas.siviotti@gmail.com</email>
+        </developer>
+    </developers>
+
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
@@ -15,6 +29,23 @@
         <kotlin.version>1.4.32</kotlin.version>
         <junit.version>5.7.0</junit.version>
     </properties>
+
+    <scm>
+        <connection>https://github.com/siviotti/maskit.git</connection>
+        <developerConnection>https://github.com/siviotti/maskit.git</developerConnection>
+        <url>https://github.com/siviotti/maskit</url>
+    </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
     <dependencies>
         <dependency>

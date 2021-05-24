@@ -4,7 +4,7 @@ import br.net.maskit.toDigits
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-internal class ApiKtTest{
+internal class InternalKtTest{
 
     @Test
     fun testToDigits(){

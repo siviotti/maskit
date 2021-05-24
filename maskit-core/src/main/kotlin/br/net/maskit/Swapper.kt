@@ -6,7 +6,7 @@ package br.net.maskit
  * @author Douglas Siviotti
  * @since 1.0
  */
-data class Swapper(val indexes: List<Int>, val size: Int = indexes.size) {
+data class Swapper @JvmOverloads constructor(val indexes: List<Int>, val size: Int = indexes.size) {
     init {
         indexes.forEach { c ->
             check(c in 0 until size) { "Invalid index: $c. Must be between 0 and ${size - 1}" }

@@ -8,6 +8,6 @@ internal class MaskTableTest{
     @Test
     fun testCreate(){
         val pseudoTable = MaskTable(DEFAULT_MASK_TABLE_STR)
-        println(pseudoTable)
+        //println(pseudoTable)
     }
 }
