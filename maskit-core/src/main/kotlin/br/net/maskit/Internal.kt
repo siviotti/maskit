@@ -1,5 +1,7 @@
 package br.net.maskit
 
+import java.time.LocalDateTime
+
 // Internal Constants
 
 const val VALID_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
@@ -27,4 +29,17 @@ fun listToString(list: List<*>): String {
     val sb = StringBuilder()
     list.forEach { c -> sb.append(c) }
     return sb.toString()
+}
+
+inline fun leftZero(value: Int) = if (value in 0..9) "0$value" else value.toString()
+
+fun dateTimeToDigits(dateTime: LocalDateTime): List<Int> {
+    val sb = StringBuilder()
+    sb.append(dateTime.year)
+    sb.append(leftZero(dateTime.monthValue))
+    sb.append(leftZero(dateTime.dayOfMonth))
+    sb.append(leftZero(dateTime.hour))
+    sb.append(leftZero(dateTime.minute))
+    sb.append(leftZero(dateTime.second))
+    return toDigits(sb.toString())
 }

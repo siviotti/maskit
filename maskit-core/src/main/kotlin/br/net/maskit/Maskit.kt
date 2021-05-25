@@ -48,6 +48,10 @@ interface Maskit<T> {
      */
     fun randomMask(id: T): Masked
 
+    //fun swap(id: T): T
+
+    //fun shuffle(id: T): T
+
     //fun timeMask(id: T): Masked
 
     //fun dateMask(id: T): Masked
