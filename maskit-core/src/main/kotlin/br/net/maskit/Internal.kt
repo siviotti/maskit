@@ -1,6 +1,8 @@
 package br.net.maskit
 
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 // Internal Constants
 
@@ -9,8 +11,12 @@ const val ROW_SIZE = 10
 const val DEFAULT_ROW_COUNT = 6
 const val DATE_TIME_SIZE = 14 // yyyyMMddhhmmss = 14
 
-/** ONLY TEST USE!!! Example of Swapper numeric sequence. */
+/** ONLY TEST USE!!! Example of Swapper numeric sequence (11 indexes). */
 const val DEFAULT_SWAPPER_SEQ = "7,9,1,5,0,10,6,2,3,8,4"
+
+/** ONLY TEST USE!!! Example of Swapper numeric sequence (25 indexes). */
+const val DEFAULT_PREFIX_SWAPPER_SEQ =
+    "17,2,10,22,12,3,19,8,15,6,23,9,11,16,0,24,7,14,21,1,18,5,20,4,13"
 
 /** ONLY TEST USE!!! Example of MaskTable content. */
 const val DEFAULT_MASK_TABLE_STR =
@@ -60,4 +66,26 @@ fun timeToDigits(dateTime: LocalDateTime): List<Int> {
     sb.append(leftZero(dateTime.second))
     return toDigits(sb.toString())
 }
+
+fun digitsToDateTime(digits: List<Int>): LocalDateTime = LocalDateTime.of(
+    Integer.valueOf("${digits[0]}${digits[1]}${digits[2]}${digits[3]}"),
+    Integer.valueOf("${digits[4]}${digits[5]}"),
+    Integer.valueOf("${digits[6]}${digits[7]}"),
+    Integer.valueOf("${digits[8]}${digits[9]}"),
+    Integer.valueOf("${digits[10]}${digits[11]}"),
+    Integer.valueOf("${digits[12]}${digits[13]}")
+)
+
+fun digitsToDate(digits: List<Int>): LocalDate = LocalDate.of(
+    Integer.valueOf("${digits[0]}${digits[1]}${digits[2]}${digits[3]}"),
+    Integer.valueOf("${digits[4]}${digits[5]}"),
+    Integer.valueOf("${digits[6]}${digits[7]}")
+)
+
+fun digitsToTime(digits: List<Int>): LocalTime = LocalTime.of(
+    Integer.valueOf("${digits[0]}${digits[1]}"),
+    Integer.valueOf("${digits[2]}${digits[3]}"),
+    Integer.valueOf("${digits[4]}${digits[5]}")
+)
+
 
