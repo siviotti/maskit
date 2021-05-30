@@ -7,6 +7,7 @@ import java.time.LocalDateTime
 const val VALID_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
 const val ROW_SIZE = 10
 const val DEFAULT_ROW_COUNT = 6
+const val DATE_TIME_SIZE = 14 // yyyyMMddhhmmss = 14
 
 /** ONLY TEST USE!!! Example of Swapper numeric sequence. */
 const val DEFAULT_SWAPPER_SEQ = "7,9,1,5,0,10,6,2,3,8,4"
@@ -31,7 +32,7 @@ fun listToString(list: List<*>): String {
     return sb.toString()
 }
 
-inline fun leftZero(value: Int) = if (value in 0..9) "0$value" else value.toString()
+fun leftZero(value: Int) = if (value in 0..9) "0$value" else value.toString()
 
 fun dateTimeToDigits(dateTime: LocalDateTime): List<Int> {
     val sb = StringBuilder()
@@ -43,3 +44,20 @@ fun dateTimeToDigits(dateTime: LocalDateTime): List<Int> {
     sb.append(leftZero(dateTime.second))
     return toDigits(sb.toString())
 }
+
+fun dateToDigits(dateTime: LocalDateTime): List<Int> {
+    val sb = StringBuilder()
+    sb.append(dateTime.year)
+    sb.append(leftZero(dateTime.monthValue))
+    sb.append(leftZero(dateTime.dayOfMonth))
+    return toDigits(sb.toString())
+}
+
+fun timeToDigits(dateTime: LocalDateTime): List<Int> {
+    val sb = StringBuilder()
+    sb.append(leftZero(dateTime.hour))
+    sb.append(leftZero(dateTime.minute))
+    sb.append(leftZero(dateTime.second))
+    return toDigits(sb.toString())
+}
+
