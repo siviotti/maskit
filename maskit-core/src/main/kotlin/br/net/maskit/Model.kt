@@ -1,7 +1,5 @@
 package br.net.maskit
 
-import java.time.LocalDateTime
-
 data class NumericId(val digits: List<Int>) {
     init {
         digits.forEach { c -> check(c in 0..9) { "Invalid value: $c" } }
@@ -33,8 +31,3 @@ data class Masked(val text: String) {
 
     override fun toString(): String = text
 }
-
-data class MomentNumericId(val moment: LocalDateTime, val numericId: NumericId) {
-
-}
-

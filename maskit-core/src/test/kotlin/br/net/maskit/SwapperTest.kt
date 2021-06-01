@@ -41,12 +41,12 @@ internal class SwapperTest {
     }
 
     @Test
-    fun testShuffle(){
+    fun testSwap(){
         val original = numericIdOf("07311631769")
         val seq = Swapper (listOf(2,10,3,8,6,9,0,7,1,5,4))
         // 39173601761
-        val shuffled = seq.swap(original)
-        assertEquals(numericIdOf("39173601761"), shuffled)
+        val swapped = seq.swap(original)
+        assertEquals(numericIdOf("39173601761"), swapped)
     }
 
     @Test
@@ -56,19 +56,6 @@ internal class SwapperTest {
         val shuffled = numericIdOf("39173601761")
         val restored = seq.restore(shuffled)
         assertEquals(original, restored)
-    }
-
-    @Test
-    fun tesRequireSize(){
-        val seq = Swapper (listOf(2,10,3,8,6,9,0,7,1,5,4))
-        val little = numericIdOf("123")
-        val big = numericIdOf("1234567890123456789")
-        assertThrows(IllegalArgumentException::class.java) { seq.swap(little) }
-        assertThrows(IllegalArgumentException::class.java) { seq.swap(big) }
-        assertThrows(IllegalArgumentException::class.java) { seq.restore(little) }
-        assertThrows(IllegalArgumentException::class.java) { seq.restore(big) }
-        assertThrows(IllegalArgumentException::class.java) { seq.blend(little) }
-        assertThrows(IllegalArgumentException::class.java) { seq.blend(big) }
     }
 
     @Test
@@ -83,6 +70,19 @@ internal class SwapperTest {
         // (5 x (2+1)) + (2 * (0+1)) + (7 x (1+1)) + (3 x (4+1)) + (1 x (3+1))
         //     15      +     2       +     14      +     15      +     4 = 50
         assertEquals(50, seq.blend(id2))
+    }
+
+    @Test
+    fun tesRequireSize(){
+        val seq = Swapper (listOf(2,10,3,8,6,9,0,7,1,5,4))
+        val little = numericIdOf("123")
+        val big = numericIdOf("1234567890123456789")
+        assertThrows(IllegalArgumentException::class.java) { seq.swap(little) }
+        assertThrows(IllegalArgumentException::class.java) { seq.swap(big) }
+        assertThrows(IllegalArgumentException::class.java) { seq.restore(little) }
+        assertThrows(IllegalArgumentException::class.java) { seq.restore(big) }
+        assertThrows(IllegalArgumentException::class.java) { seq.blend(little) }
+        assertThrows(IllegalArgumentException::class.java) { seq.blend(big) }
     }
 
     @Test

@@ -13,8 +13,8 @@ class MaskTable @JvmOverloads constructor(text: String, val rowCount: Int = DEFA
 
     init {
         val size = ROW_SIZE * rowCount
-        require(text.length == size) { "Table must have size=$size and rows=$rowCount. Content:$text" }
-        require(text.toSet().size == text.length) { "Duplicated element" }
+        check(text.length == size) { "Table must have size=$size and rows=$rowCount. Content:$text" }
+        check(text.toSet().size == text.length) { "Duplicated element" }
         var temp = mutableListOf<Char>()
         var rowsTemp = mutableListOf<List<Char>>()
         val mapTemp = mutableMapOf<Char, Int>()
