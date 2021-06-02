@@ -16,11 +16,11 @@ import kotlin.random.Random
 class NumericMaskit(val swapper: Swapper, val table: MaskTable) : Maskit<NumericId> {
 
     override
-    fun mask(numericId: NumericId): Masked {
-        val shift = swapper.blend(numericId) % table.rowCount
-        val shuffled = swapper.swap(numericId)
+    fun mask(id: NumericId): Masked {
+        val shift = swapper.blend(id) % table.rowCount
+        val shuffled = swapper.swap(id)
         val list = shuffled.digits.mapIndexed { index, digit ->
-            val row = (swapper.indexes[index] + numericId.digits[index] + shift) % table.rowCount
+            val row = (swapper.indexes[index] + id.digits[index] + shift) % table.rowCount
             table.encode(row, digit)
         }
         return Masked(listToString(list))
@@ -32,8 +32,8 @@ class NumericMaskit(val swapper: Swapper, val table: MaskTable) : Maskit<Numeric
     }
 
     override
-    fun randomMask(numericId: NumericId): Masked{
-        val swapped = swapper.swap(numericId)
+    fun randomMask(id: NumericId): Masked{
+        val swapped = swapper.swap(id)
         val list = swapped.digits.map { digit ->
             val row = Random.nextInt(0 , table.rowCount)
             table.encode(row, digit)

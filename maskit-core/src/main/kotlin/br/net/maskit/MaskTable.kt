@@ -15,11 +15,11 @@ class MaskTable @JvmOverloads constructor(text: String, val rowCount: Int = DEFA
         val size = ROW_SIZE * rowCount
         check(text.length == size) { "Table must have size=$size and rows=$rowCount. Content:$text" }
         check(text.toSet().size == text.length) { "Duplicated element" }
+        requireValidChar(text)
         var temp = mutableListOf<Char>()
-        var rowsTemp = mutableListOf<List<Char>>()
+        val rowsTemp = mutableListOf<List<Char>>()
         val mapTemp = mutableMapOf<Char, Int>()
         text.forEachIndexed { index, char ->
-            requireValidChar(char)
             temp.add(char)
             mapTemp[char] = index % 10
             if ((index + 1) % ROW_SIZE == 0) { //10, 20, 30, 40, 50, 60
@@ -39,10 +39,10 @@ class MaskTable @JvmOverloads constructor(text: String, val rowCount: Int = DEFA
     }
 
     override fun equals(other: Any?): Boolean {
-        if (other == null) return false
-        if (other == this) return true
+        if (other === null) return false
+        if (other === this) return true
         if (other::class.java != this::class.java) return false
-        return rows.equals((other as MaskTable).rows)
+        return rows == (other as MaskTable).rows
     }
 
     override fun hashCode(): Int = rows.hashCode()
@@ -52,6 +52,14 @@ class MaskTable @JvmOverloads constructor(text: String, val rowCount: Int = DEFA
         rows.forEach {
             it.forEach { char -> sb.append(char) }
             sb.append("\n")
+        }
+        return sb.toString()
+    }
+
+    fun toPlainString() : String {
+        val sb = StringBuilder()
+        rows.forEach {
+            it.forEach { char -> sb.append(char) }
         }
         return sb.toString()
     }

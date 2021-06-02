@@ -16,14 +16,27 @@ class MaskController(@Autowired val maskService: MaskService) {
 
     @GetMapping("/amask/{id}")
     fun amask(@PathVariable id: String): String {
-        println("id:$id")
         return maskService.randomMask(numericIdOf(id)).toString()
     }
 
     @GetMapping("/unmask/{masked}")
     fun unmask(@PathVariable masked: String): String {
-        println("masked:$masked")
         return maskService.unmask(maskedOf(masked)).toString()
+    }
+
+    @GetMapping("/dmask/{id}")
+    fun dateMask(@PathVariable id: String): String {
+        return maskService.dateMask(numericIdOf(id)).toString()
+    }
+
+    @GetMapping("/damask/{id}")
+    fun dateRandomMask(@PathVariable id: String): String {
+        return maskService.dateRandomMask(numericIdOf(id)).toString()
+    }
+
+    @GetMapping("/dunmask/{masked}")
+    fun dateUnmask(@PathVariable masked: String): String {
+        return maskService.dateUnmask(maskedOf(masked)).toString()
     }
 
 }

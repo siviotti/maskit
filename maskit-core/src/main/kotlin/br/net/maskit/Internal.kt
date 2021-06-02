@@ -9,7 +9,6 @@ import java.time.LocalTime
 const val VALID_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
 const val ROW_SIZE = 10
 const val DEFAULT_ROW_COUNT = 6
-const val DATE_TIME_SIZE = 14 // yyyyMMddhhmmss = 14
 
 /** ONLY TEST USE!!! Example of Swapper numeric sequence (11 indexes). */
 const val DEFAULT_SWAPPER_SEQ = "7,9,1,5,0,10,6,2,3,8,4"
@@ -30,7 +29,7 @@ const val DEFAULT_MASK_TABLE_STR =
 // Internal Functions
 
 fun toDigits(text: String) = text.map { c -> Character.getNumericValue(c) }
-fun requireValidChar(c: Char) = require(VALID_CHAR.contains(c)) { "Invalid char: $c" }
+fun requireValidChar(text: String) = text.forEach { require(VALID_CHAR.contains(it)) { "Invalid char: $it" } }
 
 fun listToString(list: List<*>): String {
     val sb = StringBuilder()

@@ -33,8 +33,7 @@ open class PrefixMaskit(swapper: Swapper, table: MaskTable, val prefixType: Pref
             "The ID must have size = $idSize because tha mask perform over 'dateTime + Id'. " +
                     "Swapper size=${maskit.swapper.size}. Prefix size = $prefixType.size"
         }
-        val dt = now()
-        return NumericId(prefixType.toDigits(dt)).concat(id)
+        return NumericId(prefixType.toDigits(now())).concat(id)
     }
 
     protected open fun now(): LocalDateTime = LocalDateTime.now()

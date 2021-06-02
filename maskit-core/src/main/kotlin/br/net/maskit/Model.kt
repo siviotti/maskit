@@ -26,7 +26,7 @@ data class NumericId(val digits: List<Int>) {
 
 data class Masked(val text: String) {
     init {
-        text.forEach { requireValidChar(it) }
+        requireValidChar(text)
     }
 
     override fun toString(): String = text
