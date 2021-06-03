@@ -53,4 +53,10 @@ internal class InternalKtTest{
             digitsToDateTime(listOf(2,0,2,1,0,5,3,0,1,3,1,7,5,3)))
     }
 
+    @Test
+    fun testFilterDuplicates(){
+        assertEquals(listOf<Int>(), filterDuplicates(listOf(1,2,3,4,5,6,7,8)))
+        assertEquals(listOf(2,5,7), filterDuplicates(listOf(1,2,3,4,5,6,7,8,2,5,7)))
+    }
+
 }

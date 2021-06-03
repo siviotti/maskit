@@ -11,10 +11,8 @@ data class Swapper @JvmOverloads constructor(val indexes: List<Int>, val size: I
         indexes.forEach { c ->
             check(c in 0 until size) { "Invalid index: $c. Must be between 0 and ${size - 1}" }
         }
-        check(indexes.size == size)
-        { "Expected $size indexes. Found ${indexes.size}. Indexes: $indexes" }
-        check(indexes.toSet().size == size)
-        { "Repeated indexes: ${indexes.groupingBy { it }.eachCount().filter { it.value > 1 }}" }
+        check(indexes.size == size) { "Expected $size indexes. Found ${indexes.size}. Indexes: $indexes" }
+        check(indexes.toSet().size == size) { "Repeated indexes: ${filterDuplicates(indexes)}" }
     }
 
     fun swap(numericId: NumericId): NumericId {

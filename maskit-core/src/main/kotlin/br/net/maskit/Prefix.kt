@@ -10,7 +10,7 @@ import java.time.LocalDateTime
  * @see Maskit
  * @see NumericMaskit
  */
-open class PrefixMaskit(swapper: Swapper, table: MaskTable, val prefixType: PrefixType) : Maskit<NumericId> {
+open class PrefixMaskit(swapper: Swapper, table: DigitTable, val prefixType: PrefixType) : Maskit<NumericId> {
 
     val maskit = NumericMaskit(swapper, table)
 

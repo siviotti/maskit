@@ -18,7 +18,7 @@ public class JavaExemploVerboso {
         // Defina uma sequência de Swap com indices embaralhados
         Swapper swapper = new Swapper(Arrays.asList(7, 9, 1, 5, 0, 10, 6, 2, 3, 8, 4));
         // Define 60 caracteres da tabela 012345678901234567890123456789012345678901234567890123456789
-        MaskTable table = new MaskTable ("GoQd7ShKu2k9wONaC4Hr3mExBU0WgfFn5yP1pIvDLsM8iAtJe6RbVlXjYqTc");
+        DigitTable table = new DigitTable("GoQd7ShKu2k9wONaC4Hr3mExBU0WgfFn5yP1pIvDLsM8iAtJe6RbVlXjYqTc");
         // Cria uma instância de Maskit para Ids Numéricos (exemplo CPF)
         Maskit<NumericId> maskit = new NumericMaskit(swapper, table);
         // Cria uma versão mascarada do CPF (11 dígitos)

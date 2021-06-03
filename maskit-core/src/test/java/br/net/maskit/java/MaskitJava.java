@@ -10,8 +10,8 @@ import static br.net.maskit.Api.*;
 public class MaskitJava {
 
     public static void main(String[] args) {
-        String cpf = "07311631769";
-        NumericMaskit maskit = defaultMaskit();
+        String cpf = "07311631769"; // Tamanho = 11
+        NumericMaskit maskit = randomMaskit(11); // 11 = CPF
         Masked masked = maskit.mask(numericIdOf(cpf));
         Masked randomMasked = maskit.randomMask(numericIdOf(cpf));
         System.out.println("CPF Original    :"+ cpf);

@@ -21,14 +21,13 @@ internal class ApiTest {
             assertEquals(11, mass.last().toSet().size) // no duplicate
         }
         val duplicates = max - mass.size
-        println("Generated lists from $max: ${mass.size}, duplicates: $duplicates")
+        //println("Generated lists from $max: ${mass.size}, duplicates: $duplicates")
         assertTrue(duplicates < 10)
     }
 
     @Test
     fun testRandomChars() {
         val chars = randomChars()
-        println(chars)
         assertEquals(60, chars.length)
         assertEquals(60, chars.map { it }.toSet().size) // no duplicate
     }

@@ -11,9 +11,9 @@ import kotlin.random.Random
  * @author Douglas Siviotti
  * @since 1.0
  * @see Swapper
- * @see MaskTable
+ * @see DigitTable
  */
-class NumericMaskit(val swapper: Swapper, val table: MaskTable) : Maskit<NumericId> {
+class NumericMaskit(val swapper: Swapper, val table: DigitTable) : Maskit<NumericId> {
 
     override
     fun mask(id: NumericId): Masked {

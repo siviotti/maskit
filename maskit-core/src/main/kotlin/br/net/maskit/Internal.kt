@@ -1,3 +1,8 @@
+/**
+ * Internal API
+ * @author Douglas Siviotti
+ * @since 1.0
+ */
 package br.net.maskit
 
 import java.time.LocalDate
@@ -29,7 +34,7 @@ const val DEFAULT_MASK_TABLE_STR =
 // Internal Functions
 
 fun toDigits(text: String) = text.map { c -> Character.getNumericValue(c) }
-fun requireValidChar(text: String) = text.forEach { require(VALID_CHAR.contains(it)) { "Invalid char: $it" } }
+fun checkValidChar(text: String) = text.forEach { check(VALID_CHAR.contains(it)) { "Invalid char: $it" } }
 
 fun listToString(list: List<*>): String {
     val sb = StringBuilder()
@@ -38,6 +43,10 @@ fun listToString(list: List<*>): String {
 }
 
 fun leftZero(value: Int) = if (value in 0..9) "0$value" else value.toString()
+
+fun <T> filterDuplicates(elements: Collection<T>): List<T>{
+  return elements.groupingBy { it }.eachCount().filter { it.value > 1 }.keys.toList()
+}
 
 fun dateTimeToDigits(dateTime: LocalDateTime): List<Int> {
     val sb = StringBuilder()

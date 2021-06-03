@@ -13,7 +13,7 @@ internal class PrefixTest {
 
     fun createDateTimeMaskit() = FixedDateTimePrefixMaskit(
         Swapper(listOf(17, 2, 10, 22, 12, 3, 19, 8, 15, 6, 23, 9, 11, 16, 0, 24, 7, 14, 21, 1, 18, 5, 20, 4, 13)),
-        MaskTable(DEFAULT_MASK_TABLE_STR)
+        DigitTable(DEFAULT_MASK_TABLE_STR)
     )
 
     @Test
@@ -53,7 +53,6 @@ internal class PrefixTest {
     fun testRandom() {
         val maskit = createDateTimeMaskit() // uses TEST_DATE_TIME, not Now()
         val cpf = numericIdOf("07311631769")
-        val dateTimeStr = NumericId(dateTimeToDigits(TEST_DATE_TIME)).toString()
         var randomMasked: Masked
         for (i in 1..1000) {
             randomMasked = maskit.randomMask(cpf)
@@ -93,7 +92,7 @@ internal class PrefixTest {
     }
 }
 
-class FixedDateTimePrefixMaskit(swapper: Swapper, table: MaskTable) :
+class FixedDateTimePrefixMaskit(swapper: Swapper, table: DigitTable) :
     PrefixMaskit(swapper, table, PrefixType.DATE_TIME) {
 
     override fun now() = TEST_DATE_TIME

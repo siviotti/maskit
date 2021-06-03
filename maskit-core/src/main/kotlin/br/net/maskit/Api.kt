@@ -1,34 +1,39 @@
 @file:JvmName("Api")
 
+/**
+ * Public API
+ * @author Douglas Siviotti
+ * @since 1.0
+ */
 package br.net.maskit
 
 import java.lang.StringBuilder
 import kotlin.random.Random
 
-fun numericMaskitOf(swapper: Swapper, maskTable: MaskTable) = NumericMaskit(swapper, maskTable)
+fun numericMaskitOf(swapper: Swapper, table: DigitTable) = NumericMaskit(swapper, table)
 fun numericMaskitOf(commaSeparatedIndexes: String, charTable: String) =
     numericMaskitOf(
         Swapper(commaSeparatedIndexes.split(",").map { it.toInt() }),
-        MaskTable(charTable, DEFAULT_ROW_COUNT)
+        DigitTable(charTable, DEFAULT_ROW_COUNT)
     )
 
 @JvmOverloads
-fun prefixMaskitOf(swapper: Swapper, maskTable: MaskTable, prefixType: PrefixType = PrefixType.DATE_TIME) =
-    PrefixMaskit(swapper, maskTable, prefixType)
+fun prefixMaskitOf(swapper: Swapper, table: DigitTable, prefixType: PrefixType = PrefixType.DATE_TIME) =
+    PrefixMaskit(swapper, table, prefixType)
 
 @JvmOverloads
 fun prefixMaskitOf(commaSeparatedIndexes: String, charTable: String, prefixType: PrefixType = PrefixType.DATE_TIME) =
     prefixMaskitOf(
         Swapper(commaSeparatedIndexes.split(",").map { it.toInt() }),
-        MaskTable(charTable, DEFAULT_ROW_COUNT),
+        DigitTable(charTable, DEFAULT_ROW_COUNT),
         prefixType
     )
 
-fun datedMaskitOf(swapper: Swapper, maskTable: MaskTable) = PrefixMaskit(swapper, maskTable, PrefixType.DATE)
+fun datedMaskitOf(swapper: Swapper, table: DigitTable) = PrefixMaskit(swapper, table, PrefixType.DATE)
 fun datedMaskitOf(commaSeparatedIndexes: String, charTable: String) =
     prefixMaskitOf(commaSeparatedIndexes, charTable, PrefixType.DATE)
 
-fun timedMaskitOf(swapper: Swapper, maskTable: MaskTable) = PrefixMaskit(swapper, maskTable, PrefixType.TIME)
+fun timedMaskitOf(swapper: Swapper, table: DigitTable) = PrefixMaskit(swapper, table, PrefixType.TIME)
 fun timedMaskitOf(commaSeparatedIndexes: String, charTable: String) =
     prefixMaskitOf(commaSeparatedIndexes, charTable, PrefixType.TIME)
 
@@ -38,7 +43,7 @@ fun maskedOf(text: String) = Masked(text)
 
 @JvmOverloads
 fun randomMaskit(idSize: Int, chars: String = DEFAULT_MASK_TABLE_STR, rowCount: Int = 6) =
-    numericMaskitOf(randomSwapper(idSize), randomMaskTable(chars, rowCount));
+    numericMaskitOf(randomSwapper(idSize), randomDigitTable(chars, rowCount))
 
 @JvmOverloads
 fun randomPrefixMaskit(
@@ -46,13 +51,13 @@ fun randomPrefixMaskit(
     chars: String = DEFAULT_MASK_TABLE_STR,
     rowCount: Int = 6,
     prefixType: PrefixType = PrefixType.DATE_TIME
-) = prefixMaskitOf(randomSwapper(idSize), randomMaskTable(chars, rowCount), prefixType);
+) = prefixMaskitOf(randomSwapper(idSize), randomDigitTable(chars, rowCount), prefixType)
 
 fun randomSwapper(size: Int) = Swapper(randomIndexes(size))
 
 @JvmOverloads
-fun randomMaskTable(chars: String = DEFAULT_MASK_TABLE_STR, rowCount: Int = DEFAULT_ROW_COUNT) =
-    MaskTable(chars, rowCount)
+fun randomDigitTable(chars: String = DEFAULT_MASK_TABLE_STR, rowCount: Int = DEFAULT_ROW_COUNT) =
+    DigitTable(chars, rowCount)
 
 fun randomIndexes(size: Int): List<Int> {
     val list = (0 until size).map { it }.toMutableList()
@@ -66,7 +71,7 @@ fun randomIndexes(size: Int): List<Int> {
     return temp.toList()
 }
 
-fun indexesToString(indexes: List<Int>) : String {
+fun indexesToString(indexes: List<Int>): String {
     val sb = StringBuilder()
     indexes.forEach { sb.append(it).append(',') }
     sb.deleteAt(sb.lastIndex)

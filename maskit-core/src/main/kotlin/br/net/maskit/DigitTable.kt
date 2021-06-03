@@ -7,15 +7,15 @@ import java.lang.StringBuilder
  * @author Douglas Siviotti
  * @since 1.0
  */
-class MaskTable @JvmOverloads constructor(text: String, val rowCount: Int = DEFAULT_ROW_COUNT) {
+class DigitTable @JvmOverloads constructor(text: String, val rowCount: Int = DEFAULT_ROW_COUNT) {
     private val rows: List<List<Char>>
     private val map: Map<Char, Int>
 
     init {
         val size = ROW_SIZE * rowCount
         check(text.length == size) { "Table must have size=$size and rows=$rowCount. Content:$text" }
-        check(text.toSet().size == text.length) { "Duplicated element" }
-        requireValidChar(text)
+        check(text.toSet().size == text.length) { "Duplicated elements: ${filterDuplicates(text.toList())}" }
+        checkValidChar(text)
         var temp = mutableListOf<Char>()
         val rowsTemp = mutableListOf<List<Char>>()
         val mapTemp = mutableMapOf<Char, Int>()
@@ -42,7 +42,7 @@ class MaskTable @JvmOverloads constructor(text: String, val rowCount: Int = DEFA
         if (other === null) return false
         if (other === this) return true
         if (other::class.java != this::class.java) return false
-        return rows == (other as MaskTable).rows
+        return rows == (other as DigitTable).rows
     }
 
     override fun hashCode(): Int = rows.hashCode()
@@ -56,7 +56,7 @@ class MaskTable @JvmOverloads constructor(text: String, val rowCount: Int = DEFA
         return sb.toString()
     }
 
-    fun toPlainString() : String {
+    fun toPlainString(): String {
         val sb = StringBuilder()
         rows.forEach {
             it.forEach { char -> sb.append(char) }
