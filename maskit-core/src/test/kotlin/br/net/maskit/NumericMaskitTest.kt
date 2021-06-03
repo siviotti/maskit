@@ -10,7 +10,7 @@ private const val TEST_TABLE = "BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvw
 
 internal class NumericMaskitTest {
 
-    fun createMaskit() = NumericMaskit(
+    private fun createMaskit() = NumericMaskit(
         Swapper(listOf(2, 10, 3, 8, 6, 9, 0, 7, 1, 5, 4)), DigitTable(
             DEFAULT_MASK_TABLE_STR
         )
@@ -80,12 +80,12 @@ internal class NumericMaskitTest {
     }
 
     @Test
-    fun testMass() {
-        val seq = Swapper(listOf(2, 10, 3, 8, 6, 9, 0, 7, 1, 5, 4))
+    fun testMassDistribution() {
+        val swapper = Swapper(listOf(2, 10, 3, 8, 6, 9, 0, 7, 1, 5, 4))
         val table = DigitTable(TEST_TABLE)
-        val kit = NumericMaskit(seq, table)
+        val kit = NumericMaskit(swapper, table)
         val max: Long = 1000000
-        var num :Long
+        var num: Long
         val random = Random
         var id: NumericId
         var masked: Masked
@@ -108,12 +108,28 @@ internal class NumericMaskitTest {
             assertEquals(id, decodedId)
             occur(id, masked, mapOccur)
         }
+        val totalCharsEncoded = swapper.size * max
+        val tableSize = table.rowCount * 10
+
+        // Char Distribution
         //mapDist.toSortedMap().forEach { k, v -> println("$k = $v") }
+        val charDistAvg = totalCharsEncoded / tableSize
+        // check 10% tolerance
+        mapDist.forEach { (_, charDist) -> assertTrue(charDist > charDistAvg * 0.9 && charDist < charDistAvg * 1.1) }
+        //println("Encode Dist AVG: $charDistAvg") // +-183333
         //mapOccur.toSortedMap().forEach { k, v -> println("digit $k occur: ${v.toSortedMap()}") }
+
+        // Encode Distribution
+        val encodeDistAvg = totalCharsEncoded / (swapper.size * tableSize)
+        //println("Encode Dist AVG: $encodeDistAvg") // +- 16666
+        // check tolerance TODO: Reduce
+        mapOccur.forEach { (_, subDist) ->
+            subDist.forEach { (_, encodeDist) -> assertTrue(encodeDist > encodeDistAvg /3 && encodeDist < encodeDistAvg * 3) }
+        }
     }
 
     private fun dist(masked: Masked, map: MutableMap<Char, Int>) {
-        var count : Int
+        var count: Int
         masked.text.forEach {
             if (!map.containsKey(it)) {
                 map.put(it, 0)
@@ -124,7 +140,7 @@ internal class NumericMaskitTest {
     }
 
     private fun occur(id: NumericId, masked: Masked, map: MutableMap<Int, MutableMap<Char, Int>>) {
-        var count : Int
+        var count: Int
         var pseudoDigit: Char
         var subMap: MutableMap<Char, Int>
         id.digits.forEachIndexed { index, digit ->
